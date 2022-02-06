@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xml>
+	<ModInfo>
+		<Name value="Allocs MapRendering and Webinterface - dwarfmaster Flavour" />
+		<Description value="Render the game map to image map tiles as it is uncovered. Optical update by dwarfmaster" />
+		<Author value="Christian 'Alloc' Illy, dwarfmaster " />
+		<Version value="alpha 0.1" />
+		<Website value="http://7dtd.illy.bz, http://der-heimat-hafen.de" />
+	</ModInfo>
+</xml>

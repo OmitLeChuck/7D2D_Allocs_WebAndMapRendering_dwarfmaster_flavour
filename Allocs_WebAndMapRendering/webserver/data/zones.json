@@ -1,0 +1,17 @@
+[{
+        "type": "mine",
+        "name": "1",
+        "x": "-1",
+        "z": "5"
+    }, {
+        "type": "dayzone",
+        "name": "Resetzone",
+        "x": "-1",
+        "z": "1"
+    }, {
+        "type": "zone",
+        "name": "Resetzone",
+        "x": "2",
+        "z": "6"
+    }
+]

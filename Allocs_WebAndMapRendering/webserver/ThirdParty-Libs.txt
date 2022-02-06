@@ -1,0 +1,10 @@
+Uses:
+- jQuery:
+- jQuery UI:
+- Map: Leaflet: http://leafletjs.com/
+	- MarkerCluster: https://github.com/Leaflet/Leaflet.markercluster
+	- Zoomslider: http://kartena.github.io/Leaflet.zoomslider/
+	- Leaflet MiniMap: https://github.com/Norkart/Leaflet-MiniMap
+	- Leaflet Measure: https://github.com/ljagis/leaflet-measure
+- Bootstrap
+- FontAwesome

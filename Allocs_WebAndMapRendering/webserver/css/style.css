@@ -1,0 +1,462 @@
+/*========================================
+-   Generic page layout
+*/
+
+body {
+	margin: 0;
+	padding: 0;
+	background-image: url('../img/background.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+	background-color: black;
+	color: orange;
+}
+
+a {
+	color: orangered;
+	text-decoration: none;
+}
+
+a:visited {
+	color: orangered;
+	text-decoration: none;
+}
+
+.adminwrapper {
+	width: 100%;
+	height: 100vh;
+	/*background-color: #408040;*/
+}
+
+.adminnavbar,
+#admincontent {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+
+.invalidinput {
+	background-color: #f00;
+}
+
+
+/*========================================
+-   Menu bar
+*/
+
+.adminnavbar {
+	width: 200px;
+	left: 0;
+	border-right: 1px solid rgba(0,0,0,0.3);
+	box-shadow: 3px 0px 14px rgba(0,0,0,0.9);
+	position: fixed;
+}
+
+.adminnavbar.hidenav {
+	width: 0;
+	visibility: hidden;
+}
+
+.adminnavbar > div {
+	margin: 5px;
+}
+
+.adminnavbarhidebutton {
+	position: fixed;
+	left: 200px;
+	/* color: #000;
+	background-color: rgba(180, 180, 180, 0.5); //#ccc; */
+	z-index: 500;
+	top: 50%;
+	/* border-radius: 5px; */
+	transform: translate(-50%, -50%);
+	/* padding: 0px 5px; */
+	/* font-family: sans-serif;*/
+	cursor: pointer;
+}
+
+.adminnavbarhidebutton.hidenav {
+	left: 18px;
+	transform: translate(-50%, -50%) rotate(-180deg);
+}
+
+/*----------------------------------------
+-   Menu entries
+*/
+
+.adminnavbar ul {
+	margin-top: 5px;
+}
+
+.adminnavbar #adminmenu .menu_button {
+	display: none;
+}
+
+.adminnavbar #adminmenu .menu_button.allowed {
+	display: list-item;
+}
+
+.adminnavbar #adminmenu .menu_button a {
+	color: orange;
+	text-decoration: none;
+}
+
+.adminnavbar #adminmenu .current_tab {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+/*
+#newlogcount {
+	font-size: 70%;
+	border-radius: 2px;
+	background-color: #f00;
+	color: #fff;
+	padding: 0px 2px 0px 2px;
+	display: none;
+}
+
+*/
+
+#newlogcount.visible {
+	display: inline;
+}
+
+/*----------------------------------------
+-   Server stats
+*/
+
+.adminnavbar #serverstats {
+	margin-bottom: 20px;
+	display: none;
+	/* color: orange; */
+	text-decoration: none;
+}
+
+.adminnavbar #serverstats #stats_time {
+	white-space: nowrap;
+	border-bottom: 1px dashed orange;
+}
+
+/*----------------------------------------
+-   Session state box
+*/
+
+#userstate {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right:auto;
+	/*background-color: #408040;*/
+}
+
+#userstate #username {
+	padding-left: 10px;
+}
+
+#userstate > div {
+	display: none;
+}
+
+
+/*========================================
+-   Content area
+*/
+
+#admincontent {
+	position: absolute;
+	right: 0;
+	left: 200px;
+	/*background-color: #408040;*/
+}
+
+#admincontent.hidenav {
+	left: 0;
+}
+
+#admincontent #nopermissionwarning {
+	margin: 20px 50px;
+}
+
+#admincontent .contenttab {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0px;
+	display: none;
+}
+
+#admincontent .current_tab {
+	display: block;
+}
+
+
+
+/*========================================
+-   Inventory dialog
+*/
+
+#info {
+	background-color: #aaaaaa;
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
+
+.inventoryButton {
+	cursor: pointer;
+}
+#playerInventoryDialog {
+	display:none;
+}
+.playerInventoryDialog {
+	text-shadow:
+		-1px -1px 0 black,  
+		1px -1px 0 black,
+		-1px 1px 0 black,
+		1px 1px 0 black;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	color: orange;
+	background: rgba(100,100,100,0.6);
+	border: none;
+}
+.playerInventoryDialog .ui-dialog-buttonpane {
+	display: none;
+}
+.playerInventoryDialog.ui-dialog {
+	z-index:1011 !important;
+}
+.ui-widget-overlay {
+	z-index:1010 !important;
+	opacity: 0.4 !important;
+}
+.playerInventoryDialog .ui-widget-content {
+	background: transparent;
+	color: orange;
+}
+.playerInventoryDialog td {
+	vertical-align: top;
+}
+
+.invTable {
+	table-layout: fixed;
+	padding: 0px;
+	margin: 0px;
+	border-collapse: collapse;
+}
+
+.playerInventoryDialog td.invField {
+	width: 58px;
+	height: 40px;
+	padding: 1px 4px;
+	margin: 0px;
+	border: 1px solid gray;
+	background-color: black;
+	background-size: 58px;
+	background-repeat: no-repeat;
+	background-position: center; 
+	vertical-align: bottom;
+	text-align: right;
+	font-size: 14pt;
+	text-shadow:
+		-1px -1px 0 black,  
+		1px -1px 0 black,
+		-1px 1px 0 black,
+		1px 1px 0 black;
+}
+
+#equipmentTable .invFieldText {
+	display: none;
+}
+.playerInventoryDialog .invFieldText { 
+	display: none;
+}
+.playerInventoryDialog .invFieldText.visible { 
+	display: inline;
+}
+.playerInventoryDialog .invFieldQuality {
+	bottom: 0px;
+	height: 5px;
+	left: 0px;
+	position: relative;
+	right: 0px;
+	display: none;
+}
+.playerInventoryDialog .invFieldQuality.visible {
+	display: block;
+}
+
+
+
+/*========================================
+-   Map
+*/
+
+.adminmap {
+	/*background-color: #408040;*/
+	background-color: transparent;
+	bottom: 0;
+}
+
+.adminmap .leaflet-control {
+	background-color: rgba(50,50,50,0.6);
+	color: orange;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.5);
+}
+
+.adminmap a,
+.adminmap a:hover,
+.adminmap .leaflet-container a,
+.adminmap .leaflet-container a:hover {
+	text-decoration: none;
+	color: orangered;
+}
+
+.webmap-control {
+	border-radius: 5px;
+	padding: 6px 10px 6px 6px;
+	white-space: nowrap;
+}
+
+.adminmap .leaflet-popup-tip,
+.adminmap .leaflet-popup-content-wrapper {
+	background-color: rgba(50,50,50,0.8);
+	color: orange;
+}
+
+
+
+
+/*========================================
+-   Log
+*/
+
+.adminlog {
+	padding: 10px;
+}
+
+.adminlog table {
+	width: 100%;
+}
+
+.adminlog table td {
+	vertical-align: top;
+}
+
+.adminlog table tr.readmark td {
+	border-bottom-width: 2px;
+	border-bottom-color: red;
+	border-bottom-style: dotted;
+}
+
+.adminlog table tr.Log td {
+	color: limegreen;
+}
+.adminlog table tr.Warning td {
+	color: orange;
+}
+.adminlog table tr.Error td {
+	color: red;
+}
+.adminlog table tr.Exception td {
+	color: red;
+}
+
+
+.adminlog .logcol_datetime,
+.adminlog .logcol_uptime {
+	white-space: nowrap;
+	text-align: right;
+}
+.adminlog .logcol_type {
+	white-space: nowrap;
+	text-align: center;
+}
+.adminlog .logcol_msg {
+	width: 100%;
+}
+
+.adminlog .logcol_missed {
+	text-align: center;
+	border-width: 1px 0px;
+	border-style: dashed;
+	border-color: orange;
+}
+
+.adminlog .tracebtn {
+	cursor: pointer;
+}
+.adminlog .tracebtn:after {
+	content: "Show trace...";
+}
+.adminlog .tracebtn.visible:after {
+	content: "Hide trace...";
+}
+
+.adminlog .trace {
+	display: none;
+}
+
+.adminlog .trace.visible {
+	display: block;
+}
+
+.adminlog .trace span {
+	display: block;
+	margin-left: 30px;
+	text-indent: -30px;
+}
+
+.adminlog #markasread {
+	cursor: pointer;
+	border-radius: 5px;
+	background-color: #444;
+	color: orangered;
+	display: inline-block;
+	margin-top: 10px;
+	padding: 3px 5px 3px 5px;
+}
+
+
+
+
+/*========================================
+-   Player list
+*/
+
+#tab_players {
+	padding: 10px;
+	padding-left: 20px;
+}
+
+.adminplayers .players_tablesorter thead .tablesorter-header {
+	background-image: url('../js/tablesorter/css/images/ice-unsorted.gif');
+	background-position: center right;
+	background-repeat: no-repeat;
+	font-weight: bold;
+}
+
+.adminplayers .players_tablesorter thead .tablesorter-headerDesc {
+	background-image: url('../js/tablesorter/css/images/ice-desc.gif');
+}
+
+.adminplayers .players_tablesorter thead .tablesorter-headerAsc {
+	background-image: url('../js/tablesorter/css/images/ice-asc.gif');
+}
+
+.tablesorter-pager .disabled {
+	opacity: .4;
+	filter: alpha(opacity=40);
+	cursor: default;
+}
+
+.tablesorter-pager img {
+	cursor: pointer;
+}
+
+.adminplayers .players_dateonline {
+	border-bottom: 1px dashed orange;
+}
+

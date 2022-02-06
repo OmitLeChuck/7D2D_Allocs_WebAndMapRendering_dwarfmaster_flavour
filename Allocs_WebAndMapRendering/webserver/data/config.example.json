@@ -1,0 +1,170 @@
+{
+  "title": "Heimathafen - Live-Map",
+  "favicon": "http://192.168.178.51:8082/static/img/icon1.svg",
+  "logo": "",
+  "background": "",
+  "time": {
+    "prefix": "Tag",
+    "showweekdayname": true,
+    "weekdaynames": [
+      "Mo",
+      "Di",
+      "Mi",
+      "Do",
+      "Fr",
+      "Sa",
+      "BN"
+    ],
+    "collapsed": false
+  },
+  "onlineplayers": {
+    "show": true,
+    "collapsed": false,
+    "users": {
+      "defaulticon": {
+        "class": "fas fa-circle text-light",
+        "color": ""
+      },
+      "donoricon": {
+        "class": "fas fa-gem text-success",
+        "color": ""
+      },
+      "specialusers": [
+        {
+          "name": "dwarfmaster",
+          "icon": {
+            "class": "fas fa-crown text-warning",
+            "color": ""
+          }
+        },
+        {
+          "name": "Cavea",
+          "icon": {
+            "class": "fas fa-heart text-danger",
+            "color": ""
+          }
+        },
+        {
+          "name": "Peter",
+          "icon": {
+            "class": "fas fa-heart text-danger",
+            "color": ""
+          }
+        }
+      ]
+    }
+  },
+  "next": {
+    "show": true,
+    "updateinterval": 60,
+    "bloodmoon": {
+      "show": true,
+      "showtimeleft": true,
+      "name": "BN"
+    },
+    "reboot": {
+      "show": true,
+      "reboothours": [
+        4,
+        8,
+        12,
+        16,
+        20,
+        0
+      ],
+      "showtimeleft": true,
+      "name": "REBOOT"
+    }
+  },
+  "menue": {
+    "show": true,
+    "collapsed": false,
+    "defaultlinks": {
+      "map": {
+        "name": "Karte",
+        "permission": "web.map"
+      },
+      "players": {
+        "name": "Spieler",
+        "permission": "webapi.getplayerlist"
+      },
+      "log": {
+        "name": "Protokoll",
+        "permission": "webapi.getlog"
+      },
+      "info": {
+        "name": "Info",
+        "permission": "web.map"
+      }
+    },
+    "additionallinks": [
+      {
+        "name": "Discord",
+        "href": "http://der-heimat-hafen.de/discord",
+        "permission": "web.map",
+        "icon": {
+          "class": "fab fa-discord text-info",
+          "color": ""
+        }
+      }
+    ]
+  },
+  "steam": {
+    "show": true,
+    "offline": "",
+    "online": "",
+    "login": "",
+    "logoff": "",
+    "logintitle": ""
+  },
+  "mouseposition": {
+    "show": true,
+    "names": {
+      "position": "Maus Position",
+      "click": "Letzer Mausklick"
+    }
+  },
+  "minimap": {
+    "show": false
+  },
+  "checkboxes": {
+    "show": true,
+    "zones": {
+      "show": true,
+      "name": "Zonen"
+    },
+    "claims": {
+      "show": true,
+      "name": "Claims"
+    },
+    "zombies": {
+      "show": true,
+      "name": "Zombies"
+    },
+    "animals": {
+      "show": true,
+      "name": "Tiere"
+    },
+    "onlineplayers": {
+      "show": true,
+      "name": "Spieler"
+    },
+    "offlineplayers": {
+      "show": false,
+      "name": "Spieler off"
+    }
+  },
+  "colors": {
+    "reset": "#ff0000",
+    "dailyreset": "#ff00ff",
+    "mines": "#0e4bef",
+    "pvp": "#000000",
+    "pve": "#ffffff",
+    "trader": "#005221"
+  },
+  "translations": {
+    "player": "Spieler",
+    "showinventory": "Zeige Inventar",
+    "hostile": "Zombie"
+  }
+}

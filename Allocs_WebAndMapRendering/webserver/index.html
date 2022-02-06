@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>7 Days to Die Live-Map</title>
+    <link rel="icon" type="image/png" href="img/favicon.png"/>
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.min.css" type="text/css"/>
+    <script type="text/javascript" src="jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- read live-map-config -->
+    <script type="text/javascript">
+        const liveMapConfig = JSON.parse($.ajax({url: 'data/config.json', async: false}).responseText);
+    </script>
+    <!-- Tablesorter -->
+    <!-- <link rel="stylesheet" href="js/tablesorter/css/theme.default.min.css" type="text/css" /> -->
+    <script type="text/javascript" src="js/tablesorter/js/jquery.tablesorter.combined.min.js"></script>
+    <!-- <link rel="stylesheet" href="js/tablesorter/css/jquery.tablesorter.pager.min.css" type="text/css" /> -->
+    <script type="text/javascript" src="js/tablesorter/js/extras/jquery.tablesorter.pager.min.js"></script>
+    <script type="text/javascript" src="js/tablesorter/js/widgets/widget-formatter.min.js"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet prefetch" href="leaflet/leaflet.css"/>
+    <script type="text/javascript" src="leaflet/leaflet.js"></script>
+
+    <!-- Leaflet MarkerCluster -->
+    <link rel="stylesheet" href="leaflet/markercluster/MarkerCluster.css"/>
+    <link rel="stylesheet" href="leaflet/markercluster/MarkerCluster.Default.css"/>
+    <script type="text/javascript" src="leaflet/markercluster/leaflet.markercluster.js"></script>
+
+    <!-- Leaflet Zoomslider -->
+    <link rel="stylesheet" href="leaflet/zoomslider/L.Control.Zoomslider.css"/>
+    <script type="text/javascript" src="leaflet/zoomslider/L.Control.Zoomslider.js"></script>
+
+    <!-- Leaflet MiniMap -->
+    <link rel="stylesheet" href="leaflet/minimap/Control.MiniMap.css"/>
+    <script type="text/javascript" src="leaflet/minimap/Control.MiniMap.js"></script>
+
+    <!-- Leaflet Measure -->
+    <link rel="stylesheet" href="leaflet/measure/leaflet-measure.css"/>
+    <script type="text/javascript" src="leaflet/measure/leaflet-measure.min.js"></script>
+
+    <!-- Own JS stuff -->
+    <script type="text/javascript" src="js/leaflet.layer.sdtdtiles.js"></script>
+    <script type="text/javascript" src="js/leaflet.regionlayer.js"></script>
+    <script type="text/javascript" src="js/leaflet.layer.landclaims.js"></script>
+    <script type="text/javascript" src="js/leaflet.control.coordinates.js"></script>
+    <script type="text/javascript" src="js/leaflet.control.reloadtiles.js"></script>
+    <script type="text/javascript" src="js/leaflet.control.gametime.js"></script>
+    <script type="text/javascript" src="js/inventory_dialog.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/stats.js"></script>
+    <script type="text/javascript" src="js/tabs.js"></script>
+    <script type="text/javascript" src="js/permissions.js"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+    <script type="text/javascript" src="js/log.js"></script>
+    <script type="text/javascript" src="js/players.js"></script>
+
+    <!-- Own stylesheet -->
+    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css"/>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- fontawesome -->
+    <script src="lib/fontawesome/js/all.min.js"></script>
+
+</head>
+<body class="text-light">
+<div class="adminwrapper">
+    <div class="adminnavbarhidebutton btn btn-sm btn-secondary rounded-circle">
+        <i class="fas fa-arrow-left fa-lg"></i>
+    </div>
+    <div class="adminnavbar">
+        <div id="logo">
+            <img src="img/logo.png" id="imglogo" alt="logo" class="img-fluid"/>
+        </div>
+        <div id="serverstats" class="text-light">
+            <div class="d-flex flex-row">
+                <div id="stats_time" class="p-1 m-1 border-bottom border-secondary h6 flex-fill">-</div>
+                <div class="p-1 m-1">
+                    <a class="p-0 m-0 text-light" data-toggle="collapse" href="#collapseStats" class="text-light"
+                       role="button" aria-expanded="false" aria-controls="collapseStats">
+                        <small><i class="fas fa-eye"></i></small>
+                    </a>
+                </div>
+            </div>
+
+            <div class="collapse" id="collapseStats">
+                <div class="m-2">
+                    <div class="d-flex">
+                        <div class="px-1"><small><i class="fas fa-skull"></i></small></div>
+                        <div><small><span id="stats_hostiles" class="rounded-pill bg-danger px-2 mx-1">-</span></small>
+                        </div>
+                        <div class="px-1"><small><i class="fas fa-paw"></i></small></div>
+                        <div><small><span id="stats_animals"
+                                          class="rounded-pill bg-warning px-2 mx-1 text-secondary">-</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="player_list_container" class="m-1">
+            <div class="d-flex flex-row p-0 m-0">
+                <div id="player_list_head" class="p-1 m-1 border-bottom border-secondary h6 flex-fill">
+                    <i class="fas fa-users"></i>
+                    <small class="mx-2">
+                        Online
+                        <span id="stats_players" class="rounded-pill bg-success px-2 mx-1">-</span>
+                    </small>
+                </div>
+                <div>
+                    <a class="p-0 m-0 text-light" data-toggle="collapse" href="#player_list" class="text-light"
+                       role="button" aria-expanded="false" aria-controls="player_list">
+                        <small><i class="fas fa-eye"></i></small>
+                    </a>
+                </div>
+            </div>
+
+            <div class="p-0 m-0 collapse" id="player_list">-</div>
+        </div>
+
+        <div id="next" class="text-light">
+            <div class="d-flex flex-row p-0 m-0 text-center justify-center">
+                <div id="next-bn-head" class="p-1 m-1 w-50 text-nowrap text-center">
+                    <i class="fas fa-skull text-danger"></i>
+                    <small class="mx-1" id="next-bn-name">BN</small>
+                </div>
+                <div id="reboot-head" class="p-1 m-1 w-50 text-nowrap text-center">
+                    <i class="fas fa-redo text-danger"></i>
+                    <small class="mx-1" id="reboot-name"><small>REBOOT</small></small>
+                </div>
+            </div>
+            <div id="next-times" class="p-1 d-flex flex-row">
+                <div class="w-50" id="next-bn-content">
+                    <div class="text-center">
+                        <div class="rounded-pill bg-success px-2 mx-1 w-75 text-center">
+                            <small>
+                                <i class="fas fa-clock"></i>
+                                <span id="next_bn">-</span>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="text-center my-1" id="next-bn-showtimeleft">
+                        <div class="rounded-pill bg-info px-2 mx-1 w-75 text-center">
+                            <small>
+                                <i class="fas fa-stopwatch"></i>
+                                <small>
+                                    <span id="next_bn_time">-</span>
+                                </small>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-50" id="reboot-content">
+                    <div class="text-center">
+                        <div class="rounded-pill bg-success px-2 mx-2 w-75 text-center">
+                            <small>
+                                <i class="fas fa-clock"></i>
+                                <span id="next_reboot">-</span>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="text-center my-1">
+                        <div class="rounded-pill bg-info px-2 mx-2 w-75 text-center">
+                            <small>
+                                <i class="fas fa-stopwatch"></i>
+                                <small>
+                                    <span id="next_reboot_time">-</span>
+                                </small>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="adminmenu" class="text-white d-none">
+            <div class="d-flex flex-row">
+                <div class="p-1 m-1 border-bottom border-secondary flex-fill"><i class="fas fa-bars"></i> Menu</div>
+                <div>
+                    <a class="p-0 m-0 text-light" data-toggle="collapse" href="#menu-admin" class="text-light"
+                       role="button" aria-expanded="false" aria-controls="menu-admin">
+                        <small><i class="fas fa-eye"></i></small>
+                    </a>
+                </div>
+            </div>
+            <div id="menu-admin" class="p-1 collapse">
+                <ul style="list-style-type:none" id="links">
+                    <li type="defaultlink"><a href="#tab_map" id="a-map" data-permission="web.map" class="text-light"><i
+                            class="fas fa-map-marked-alt"></i>&nbsp;-&nbsp;<small><span id="link-map">Map</span></small></a>
+                    </li>
+                    <li type="defaultlink"><a href="#tab_players" id="a-players" data-permission="webapi.getplayerlist"
+                                              class="text-light"><i class="fas fa-users"></i>&nbsp;-&nbsp;<small><span
+                            id="link-players">Players<span></small></a></li>
+                    <li type="defaultlink"><a href="#tab_log" id="a-log" data-permission="webapi.getlog"
+                                              class="text-light"><i
+                            class="fas fa-clipboard-list"></i>&nbsp;-&nbsp;</small><span id="link-log"></span></small>
+                        <span id="newlogcount" class="badge badge-danger"></span></a></li>
+                    <li type="defaultlink"><a href="#tab_info" id="a-info" data-permission="web.map" class="text-light"><i
+                            class="fas fa-info-circle"></i></i>&nbsp;-&nbsp;<small><span
+                            id="link-info">Informationen</span></small></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="userstate" class="text-light text-center d-none">
+        <div id="userstate_loggedin">
+            <div><small id="steam-online">angemeldet als:</small></div>
+            <a id="username" href="" target="_blank" class="btn btn-success p-1 m-1 text-light"></a>
+            <a href="/session/logout" id="steam-logoff" class="btn btn-sm btn-primary rounded-pill">abmelden</a>
+        </div>
+        <div id="userstate_loggedout">
+            <div style="font-size:10px;" id="steam-offline">nicht angemeldet</div>
+            <div class="d-inline-block align-middle">
+                <a href="/session/login" class="btn btn-sm btn-success p-1 m-1" id="steam-login-title"
+                   title="anmelden mit Steam">
+                    <small>
+                        <span class="px-2" id="steam-login">anmelden</span>
+                        <span class="px-2 border-left border-light"><i class="fab fa-steam"></i></span>
+                    </small>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="admincontent">
+        <h1 id="nopermissionwarning" style="display:none">An error occured or you have not logged in. Try logging in
+            with the Steam login in the lower left!</h1>
+
+        <div id="tab_map" class="adminmap"></div>
+
+        <div id="tab_info" class="adminmap p-2 m-3">
+            <div class="h2">Informationen zum Heimathafen</div>
+            <div id="data_info"></div>
+        </div>
+
+        <div id="tab_players" class="adminplayers">
+            <!-- Current AJAX url: <span id="players_url"></span> -->
+            <table class="players_tablesorter">
+                <thead>
+                <tr class="players_columns">
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <td class="players_pager" colspan="5">
+                        <img src="js/tablesorter/css/images/first.png" class="players_first"/>
+                        <img src="js/tablesorter/css/images/prev.png" class="players_prev"/>
+                        <span class="players_pagedisplay"></span> <!-- this can be any element, including an input -->
+                        <img src="js/tablesorter/css/images/next.png" class="players_next"/>
+                        <img src="js/tablesorter/css/images/last.png" class="players_last"/>
+                        <select class="players_pagesize">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                    </td>
+                </tr>
+                </tfoot>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div id="tab_log" class="adminlog">
+            <table>
+                <tr>
+                    <th>Date/Time</th>
+                    <th>Uptime</th>
+                    <th>Severity</th>
+                    <th>Message</th>
+                </tr>
+            </table>
+            <a id="markasread">Mark as read</a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="playerInventoryDialog" title="Player inventory">
+    Player: <span id="invPlayerName"></span><br/>
+    SteamID: <span id="invSteamId"></span><br/>
+    <br/>
+    <table>
+        <tr>
+            <td>
+                Inventory:<br/>
+                <table class="invTable" id="bagTable">
+                </table>
+                <br/>
+            </td>
+            <td rowspan="2">
+                Equipment:<br/>
+                <table class="invTable" id="equipmentTable">
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Belt:<br/>
+                <table class="invTable" id="beltTable">
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/extend.js"></script>
+</body>
+</html>
+
